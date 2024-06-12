@@ -10,6 +10,6 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 
-router.post('/submit', upload.fields([{ name: 'cv', maxCount: 1 }, { name: 'cl', maxCount: 1 }]), formDataController.submitFormData);
+router.post('/submit', upload.fields([{ name: 'cv', maxCount: 1 }, { name: 'cover_letter', maxCount: 1 }]), formDataController.submitFormData);
 
 module.exports = router;

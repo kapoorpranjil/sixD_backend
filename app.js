@@ -1,28 +1,31 @@
+require('dotenv').config();
+
 const express = require('express');
+const bodyParser = require('body-parser');
 const cors = require('cors');
-const app = express();
+const connectDB = require('./config/db');
 const formDataRoutes = require('./routes/formDataRoutes');
 const contactFormRoutes = require('./routes/contactFormRoutes');
+const jobRoutes = require('./routes/jobRoutes');
+const authRoutes = require('./routes/authRoutes');
+const { authenticateJWT } = require('./middleware/authMiddleware');
 
+const app = express();
 const PORT = 7000;
 
-// Enable CORS for all routes
+connectDB();
+
 app.use(cors());
-
-// Middleware for parsing JSON bodies
+app.use(bodyParser.json());
 app.use(express.json());
-
-// Middleware for parsing URL-encoded bodies
 app.use(express.urlencoded({ extended: true }));
-
-// Serve static files from the public directory
 app.use(express.static('public'));
 
-// Define routes
 app.use('/', formDataRoutes);
 app.use('/contact', contactFormRoutes);
+app.use('/auth', authRoutes);
+app.use('/api/jobs', authenticateJWT, jobRoutes); 
 
-// Default route
 app.get("/", (req, res) => {
     res.send("Hi, I am live");
 });

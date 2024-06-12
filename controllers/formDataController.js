@@ -1,58 +1,52 @@
-
-
 const nodemailer = require('nodemailer');
-
 
 const submitFormData = async (req, res) => {
     try {
-        
-        const { fullName, email, phone, employeeStatus, source, employeeType } = req.body;
+        const { name, email, phone, employer, city, source, employeeType, fresher } = req.body;
         const cv = req.files.cv; 
-        const cl = req.files.cl;
+        const cover_letter = req.files.cover_letter; 
 
-      
+        const employeeStatus = fresher ? 'Fresher' : employer;
+
         const mailOptions = {
-            from: 'kapoorpranjil7@gmail.com',
-            to: email,
+            from: email,
+            to: "info@sixdindia.com",
             subject: 'New Form Submission',
             html: `
-                <p><strong>Full Name:</strong> ${fullName}</p>
+                <p><strong>Full Name:</strong> ${name}</p>
                 <p><strong>Email:</strong> ${email}</p>
                 <p><strong>Phone:</strong> ${phone}</p>
-                <p><strong>Employee Status:</strong> ${employeeStatus}</p>
+                <p><strong>Employer:</strong> ${employeeStatus}</p>
+                <p><strong>City:</strong> ${city}</p>
                 <p><strong>Source:</strong> ${source}</p>
-                <p><strong>Employee Type:</strong> ${employeeType}</p>
+               
             `,
             attachments: [
-                {  
+                {
                     filename: cv.name,
                     content: cv.data,
-                    contentType: 'application/pdf'
+                    contentType: cv.mimetype
                 },
-                {   
-                    filename: cl.name,
-                    content: cl.data,
-                    contentType: 'application/pdf'
+                {
+                    filename: cover_letter.name,
+                    content: cover_letter.data,
+                    contentType: cover_letter.mimetype
                 }
             ]
         };
-        
-        
+
         const transporter = nodemailer.createTransport({
             service: 'gmail',
-            port:"465",
+            port: 465,
             secure: true,
             auth: {
-                user: 'kapoorpranjil7@gmail.com',
-                pass: 'daeh ffkt buiw nfpy'
+                user: 'info@sixdindia.com',
+                pass: 'fqqd oyuy pwzm cjga'
             }
         });
 
-        
-     
         await transporter.sendMail(mailOptions);
 
-       
         res.status(200).json({ message: 'Form data submitted successfully' });
     } catch (error) {
         console.error('Error submitting form data:', error);
@@ -61,3 +55,4 @@ const submitFormData = async (req, res) => {
 };
 
 module.exports = { submitFormData };
+
