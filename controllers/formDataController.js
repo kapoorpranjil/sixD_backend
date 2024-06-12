@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 
 const submitFormData = async (req, res) => {
     try {
-        const { name, email, phone, employer, city, source, employeeType, fresher } = req.body;
+        const {  name, email, phone, employer, city, source, fresher } = req.body;
         const cv = req.files.cv; 
         const cover_letter = req.files.cover_letter; 
 
