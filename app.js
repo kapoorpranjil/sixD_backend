@@ -24,7 +24,7 @@ app.use(express.static('public'));
 app.use('/', formDataRoutes);
 app.use('/contact', contactFormRoutes);
 app.use('/auth', authRoutes);
-app.use('/api/jobs', authenticateJWT, jobRoutes); 
+app.use('/api/jobs',  jobRoutes); 
 
 app.get("/", (req, res) => {
     res.send("Hi, I am live");

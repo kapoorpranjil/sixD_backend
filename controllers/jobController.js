@@ -20,6 +20,7 @@ exports.getJobById = async (req, res) => {
 };
 
 exports.createJob = async (req, res) => {
+    console.log("hello")
     const job = new Job({
         tabTitle: req.body.tabTitle,
         location: req.body.location,
